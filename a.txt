@@ -1,0 +1,74 @@
+{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 18774,
+    "max_score" : 1.0,
+    "hits" : [ {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOX1rPn7hTbIf0EXTdW",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"@YahooNewsTopics F1でも批判、(非難の嵐)となってしまった。","tweetCreatedAt":"Mon Mar 21 06:21:26 +0000 2016","tweetId":"711799862069563392","userId":"3968315534","userName":"見上純一","geo":"null","coordinates":"b[[[139.402275,35.40707],[139.402275,35.46865],[139.457849,35.46865],[139.457849,35.40707]]]","location":"綾瀬市"}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOX1rQB7hTbIf0EXTdZ",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"Victoria Pendleton overwhelmed with fifth place.\n#CheltenhamFestival #VictoriaPendleton\nhttps://t.co/kkCknoyclD","tweetCreatedAt":"Mon Mar 21 06:22:23 +0000 2016","tweetId":"711800101233147905","userId":"2908091825","userName":"Luke Carey","geo":"null","coordinates":"b[[[-0.161749,51.294332],[-0.161749,51.42353],[-0.023517,51.42353],[-0.023517,51.294332]]]","location":"Croydon, London."}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOX2LLG7hTbIf0EXTda",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"Lily ni bwk kat karak mcm racing F1.. Nk muntah aq weih 😖😨😷","tweetCreatedAt":"Mon Mar 21 06:22:29 +0000 2016","tweetId":"711800128642756608","userId":"37038552","userName":"Shahnaz Shamsudin","geo":"null","coordinates":"b[[[101.701744,3.212937],[101.701744,3.374924],[101.822421,3.374924],[101.822421,3.212937]]]","location":"null"}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOX2LLl7hTbIf0EXTdd",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"A 2001 Honda Accord was just scanned near Garden Grove, CA 92841 https://t.co/Pa268hmek6 #vinnychallenge #buyacar","tweetCreatedAt":"Mon Mar 21 06:23:57 +0000 2016","tweetId":"711800497024401408","userId":"2361533634","userName":"Vinny Scans","geo":"{\"coordinates\":[33.79,-117.96],\"type\":\"Point\"}","coordinates":"{\"coordinates\":[-117.96,33.79],\"type\":\"Point\"}","location":"null"}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOX22aJ7hTbIf0EXTdj",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"【6回裏ファイターズ】\n米野 中安\n荒張 投ギ\n平沼 空三振\n清水 四球\n(松本の打席ワイルドピッチ 米野三塁へ)\n松本 中飛\n\nF1-2E","tweetCreatedAt":"Mon Mar 21 06:25:53 +0000 2016","tweetId":"711800983915900929","userId":"101080880","userName":"かめちゃん@鎌スタ21日参戦","geo":"null","coordinates":"b[[[139.96826,35.738088],[139.96826,35.804155],[140.028681,35.804155],[140.028681,35.738088]]]","location":"鎌スタの隣町に生息する"}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOXzkZn7hTbIf0EXTc9",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"@AdleenJasmine aku nak beli superbike je","tweetCreatedAt":"Mon Mar 21 06:11:10 +0000 2016","tweetId":"711797280643264512","userId":"80345287","userName":"Saif Imran","geo":"null","coordinates":"b[[[101.668232,3.104906],[101.668232,3.192155],[101.742378,3.192155],[101.742378,3.104906]]]","location":"Shah Alam tak sama ngan KL "}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOXzkZ17hTbIf0EXTc-",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"https://t.co/bLFFbvsB1K","tweetCreatedAt":"Mon Mar 21 06:12:39 +0000 2016","tweetId":"711797650488578049","userId":"210449553","userName":"gusmuz","geo":"null","coordinates":"b[[[106.770437,-6.297602],[106.770437,-6.202102],[106.805699,-6.202102],[106.805699,-6.297602]]]","location":"Jakarta"}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOX5URL7hTbIf0EXTd2",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"The Crew💀\n\n#supersprintuae #mydubai #dubaivibes #bugatti #vitesse #ferrari #mclaren #lamborghini… https://t.co/VtdG03tARx","tweetCreatedAt":"Mon Mar 21 06:38:08 +0000 2016","tweetId":"711804063315304448","userId":"39002976","userName":"محمد بن راشد الهاجري","geo":"{\"coordinates\":[25.2522,55.28],\"type\":\"Point\"}","coordinates":"{\"coordinates\":[55.28,25.2522],\"type\":\"Point\"}","location":"Abu Dhabi, United Arab Emirates"}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOX51mu7hTbIf0EXTd5",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"มาลอง (@ Shabu Indy | ชาบู อินดี้ in Muang, Phrae w/ @kanokthida @bbbopete) https://t.co/PViYbgBzOY","tweetCreatedAt":"Mon Mar 21 06:38:23 +0000 2016","tweetId":"711804126573809664","userId":"943905072","userName":"อนาคต","geo":"{\"coordinates\":[18.13575427,100.14256061],\"type\":\"Point\"}","coordinates":"{\"coordinates\":[100.14256061,18.13575427],\"type\":\"Point\"}","location":"Phare Thailand"}
+    }, {
+      "_index" : "twitter",
+      "_type" : "tweet",
+      "_id" : "AVOX0sOQ7hTbIf0EXTdI",
+      "_score" : 1.0,
+      "_source":{"tweetContent":"Kasi wangi dlu kesayangan (@ Superbike \u0026amp; Kapcai Wash in Kuala Lumpur, Selangor) https://t.co/Tj1vccVg7J","tweetCreatedAt":"Mon Mar 21 06:16:10 +0000 2016","tweetId":"711798538783604736","userId":"525984488","userName":"Adib Xerra","geo":"{\"coordinates\":[3.2235578,101.72018588],\"type\":\"Point\"}","coordinates":"{\"coordinates\":[101.72018588,3.2235578],\"type\":\"Point\"}","location":"Gombak , Selangor  "}
+    } ]
+  }
+}
