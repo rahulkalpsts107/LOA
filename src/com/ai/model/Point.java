@@ -1,5 +1,10 @@
 package com.ai.model;
 
+/***
+ * Represents a point on the board
+ * @author rrk
+ *
+ */
 
 public class Point {
 

@@ -45,6 +45,13 @@ public class Master
             return this.value - n.value ;
 
         }
+
+		@Override
+		public String toString() {
+			return "Node [board=\n" + board + ", value=" + value + "]";
+		}
+        
+        
     }
     
     public boolean isCuttoffTest(Board state, int currentDepth)
@@ -64,6 +71,7 @@ public class Master
     	return ret;
     }
     
+    /*Returns the groups of connected components for a player*/
     private int getConnectedComponents(Board state, PlayerType playertype)
     {
     	 ArrayList<Point> visited = new ArrayList<Point>();
@@ -79,6 +87,9 @@ public class Master
          return groups;
     }
     
+    /*This is the eval function that computes a evaluation value based on current board configuration
+     * and based on distance of pieces on board
+     * */
     private int evalFunction(Board state)
     {
     	int cpu = getQuadCount(state.getCPUPlayer(), state.getCurrentBoard());
@@ -89,14 +100,23 @@ public class Master
     		return Constants.MAX_UTILITY;
     	if(humanGroups == 1)
     		return Constants.MIN_UTILITY;
-    	return (cpu -human) + (humanGroups - cpuGroups);
+    	//System.out.println("The cpu groups"+ cpuGroups + " humanGroups" +humanGroups ); 
+    	return (cpu-human) + (humanGroups-cpuGroups);
     }
     
+    /*Retun the utility value based on the current configuration*/
     private int utility(Board state)
     {
-    	return evalFunction(state);
+    	int cpuGroups = getConnectedComponents(state, state.getCPUPlayer());
+    	int humanGroups = getConnectedComponents(state, state.getHumanPlayer());
+    	if(cpuGroups == 1)
+    		return Constants.MAX_UTILITY;
+    	if(humanGroups == 1)
+    		return Constants.MIN_UTILITY;
+    	return 0;
     }
     
+    /*Returns the quad count*/
     private int getQuadCount(PlayerType playerType, Checker[][] board){
     	int count=0;
     	for(int i=0; i<boardSize; i++)
@@ -107,6 +127,9 @@ public class Master
     	
     }
     
+    
+    /*This api is called when trying to detemrine if all checkers are connected or not*/
+    /*runs a dfs based exploration and stops once its equal to the number of pieces*/
     private void dfsExplore(int rowP, int colP, PlayerType playerType, int boardSize, List<Point >visited, Checker[][] board)
     {
     	visited.add(new Point(rowP,colP)); //we need to track repeated states
@@ -148,7 +171,7 @@ public class Master
     	return ret;
     }
     
-    //
+    /*Checks if there is a win state or not*/
     public boolean isGame(PlayerType playerType, Board state)
     {
     	Checker [][] currentBoard = state.getCurrentBoard();
@@ -178,6 +201,7 @@ public class Master
     	return ret;
     }
     
+    /*Checks if the state is a terminal state or not*/
   	public boolean isTerminalTest(Board state)
   	{
   		boolean ret = false;
@@ -189,6 +213,7 @@ public class Master
   		return ret;
   	}
     
+  	/*master constructor*/
 	public Master(int depth , int boardSize)
 	{
 		this.maxDepth = depth;
@@ -203,6 +228,16 @@ public class Master
         }
 	}
 	
+	
+	private void printQuqd(){
+		for (int i = 0; i < boardSize; i++) { //this outer loop works for 5 and  6 boardsize
+            for (int j = 0; j < boardSize; j++) {
+            	System.out.print(quadModel[i][j]+" ");
+            }
+            System.out.println();
+        }
+	}
+	/*SInce we are storing nodes sorted order, this API returns the best action for the current player*/
 	private Move fetchBestAction(Board state)
 	{
 		//System.out.println("fetch best action "+allUniqueStates.size());
@@ -248,10 +283,11 @@ public class Master
 		endTime=0;
 	}
 	
+	/*Prints all the stats of Alpha beta search after running*/
 	private void printStats()
 	{
 		System.out.println("Search ended ! <!=== STATS =====!>");
-		System.out.println("Max depth reached = "+maxDepthReached);
+		System.out.println("Max depth reached = "+(maxDepthReached==-1 ? 0 :maxDepthReached) );
 		System.out.println("The total number of nodes generated(including root node) "+numberOfNodes);
 		System.out.println("The number of times eval function was called within Max-Value "+numberTimesEvalMax);
 		System.out.println("The number of times eval function was called within Min-Value "+numberTimesEvalMin);
@@ -260,34 +296,42 @@ public class Master
 		System.out.println("The total time in seconds "+ Math.abs(endTime-startTime)/1000);
 	}
 	
+	private void printTree(){
+		for(Node n : allUniqueStates){
+			System.out.println(n);
+		}
+	}
+	
+	/*Alpha beta algorithm*/
 	public Move alphaBetaSearch(Board state)
 	{
 		resetStats();
 		numberOfNodes++;
 		MaxValue(state,Constants.MIN_UTILITY, Constants.MAX_UTILITY, 0);
-		//MaxValue(state,Integer.MIN_VALUE, Integer.MAX_VALUE, 0);
-		Move move = fetchBestAction(state);
+		//printTree();
+		if(state.getHumanPlayer() == PlayerType.BLACK)
+			allUniqueStates = (TreeSet<Node>) allUniqueStates.descendingSet();
+		Move move = fetchBestAction(state); //fetches the best action and the move to obtain that action
 		endTime = new Date().getTime();
-		printStats();
-		return move;
+		printStats(); //print all stats after end
+		allUniqueStates.clear();
+		return move; //return move to the frontend
 	}
 	
-	//Returns a utility value
+	//Max function Returns a utility value
 	public int MaxValue(Board state, int alpha, int beta, int depth)
 	{
-		//System.out.println("max");
-		if(isTerminalTest(state))
+		if(isTerminalTest(state))//Terminal test
 		{
-			//System.out.println("reached terminal");
-			int val = utility(state);//need to plug util function
+			int val = utility(state);//Return utility value
 			allUniqueStates.add(new Node(state,val));
 			return val;
 		}
-		if(isCuttoffTest(state,depth))
+		
+		if(isCuttoffTest(state,depth))//Cutoff test
 		{
-			//System.out.println("reached cutoff "+depth);
-			int val = evalFunction(state);//NEED TO PLUG EVALUATION FUNCTION
-			allUniqueStates.add(new Node(state,val));
+			int val = evalFunction(state);
+			allUniqueStates.add(new Node(state,val));//Returns an evaluation value
 			numberTimesEvalMax++;
 			return val;
 		}
@@ -295,9 +339,6 @@ public class Master
 		
 		int v = Constants.MIN_UTILITY;
 		List<Board> actions = getAllStatesInStateSpace(state);//return board instances after making all legal moves for each checker
-		//System.out.println("List of actions "+actions.size() + " at depth "+depth);
-//		for(Board b: actions)
-//			System.out.println(b);
 		if(actions != null)
 			numberOfNodes+=actions.size(); //track number of nodes
 		for(Board childState: actions)
@@ -309,21 +350,18 @@ public class Master
 		return v;
 	}
 	
-	//Returns a utility value
+	//Min function Returns a utility value
 	public int MinValue(Board state, int alpha, int beta, int depth)
 	{
-		//System.out.println("min");
-		if(isTerminalTest(state))
+		if(isTerminalTest(state)) //Terminal test
 		{
-			//System.out.println("reached terminal");
-			int val = utility(state);//need to plug util function
+			int val = utility(state);//Return utility value
 			allUniqueStates.add(new Node(state,val));
 			return val;
 		}
-		if(isCuttoffTest(state,depth))
+		if(isCuttoffTest(state,depth)) //Cutoff test
 		{
-			//System.out.println("reached cutoff");
-			int val = evalFunction(state);//NEED TO PLUG EVALUATION FUNCTION
+			int val = evalFunction(state);//Returns an evaluation value
 			allUniqueStates.add(new Node(state,val));
 			numberTimesEvalMin++;
 			return val;
@@ -332,10 +370,7 @@ public class Master
 		
 		int v = Constants.MAX_UTILITY;
 		List<Board> actions = getAllStatesInStateSpace(state);
-		//System.out.println("List of actions "+actions.size() + " at depth "+depth);
-		if(actions != null)
-			numberOfNodes+=actions.size(); //track number of nodes
-		for(Board childState: actions)
+		for(Board childState: actions) //Loop through all states
 		{
 			v = Math.min(v, MaxValue(childState, alpha, beta, depth+1));
 			if(v<=alpha){numberTimesPrunMin++; allUniqueStates.add(new Node(childState,v)); return v;}// prune
@@ -344,9 +379,9 @@ public class Master
 		return v;
 	}
 
-	
+	/*Returns all states from one state in the form of board configuration*/
+	/*It represents the state space at some depth*/
 	private ArrayList<Board> getAllStatesInStateSpace(Board board) {
-        //board.togglePlayer();//Really need this ?
         ArrayList<Board> listOfBoards = new ArrayList<Board>(); //Contains all legal state space for this player
         for (int i = 0; i < board.getSize(); i++) 
         {
@@ -359,42 +394,45 @@ public class Master
                     {
                         Board childBoard = new Board(board);
                         childBoard.makeMove(new Point(i, j), moves.get(eachMove));
-                        listOfBoards.add(childBoard);
-                        //System.out.println(childBoard);
-                    }
+                        listOfBoards.add(childBoard);                    }
                 }
             }
         }
-        //board.togglePlayer();
         return listOfBoards;
     }
 	
 	public static void main(String args[])
 	{
-		Master m = new Master(Constants.MAX_DEPTH_HARD,5);
+		Master m = new Master(Constants.MAX_DEPTH_EASY,6);
 		Board b = new Board(6);
-		b.initializeHumanPlayer(PlayerType.BLACK);
-		System.out.println("after move \n"+b.dumpCurrentBoard());
-		Move move;
-		//System.out.println("****************************************");
-		//move = m.alphaBetaSearch(b);
-		//System.out.println(move);
-		//b.makeMove(move.src, move.dest);//cpu making the move
-		//System.out.println(b.dumpCurrentBoard());
-		b.makeMove(new Point(0,4), new Point(2,4));//human making the move
-		System.out.println(b.dumpCurrentBoard());
-		
-		move = m.alphaBetaSearch(b);
-		b.makeMove(move.src, move.dest);//cpu making the move
-		System.out.println(move);
-		System.out.println(b.dumpCurrentBoard());
-		
-		List<Point> p = b.generateAllPossibleMoves(new Point(2,4));
-		System.out.println(p);
-		
-		b.makeMove(new Point(2,4), new Point(5,1));
-		System.out.println(b.dumpCurrentBoard());
-		return ;
+		b.initializeHumanPlayer(PlayerType.WHITE);
+		//System.out.println("after move \n"+b.dumpCurrentBoard());
+		m.printQuqd();
+//		Move move;
+//		//System.out.println("****************************************");
+//		move = m.alphaBetaSearch(b);
+//		System.out.println("****ALPHA BETA ENDED");
+//		b.makeMove(move.src, move.dest);//cpu making the move
+//		System.out.println(b.dumpCurrentBoard());
+//		b.makeMove(new Point(0,4), new Point(2,4));//human making the move
+//		List<Board> actions = m.getAllStatesInStateSpace(b);
+//		for(Board b1: actions)
+//			System.out.println(b1);
+//		return;
+//		b.makeMove(new Point(0,4), new Point(2,4));//human making the move
+//		System.out.println(b.dumpCurrentBoard());
+//		
+//		move = m.alphaBetaSearch(b);
+//		b.makeMove(move.src, move.dest);//cpu making the move
+//		System.out.println(move);
+//		System.out.println(b.dumpCurrentBoard());
+//		
+//		List<Point> p = b.generateAllPossibleMoves(new Point(2,4));
+//		System.out.println(p);
+//		
+//		b.makeMove(new Point(2,4), new Point(5,1));
+//		System.out.println(b.dumpCurrentBoard());
+//		return ;
 //		b.makeMove(new Point(5,3), new Point(3,5));//human making the move
 //		System.out.println(b.dumpCurrentBoard());
 //		

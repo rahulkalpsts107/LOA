@@ -1,5 +1,10 @@
 package com.ai.model;
 
+/***
+ * Class describes a move from src to destinaion
+ * @author rrk
+ *
+ */
 public class Move 
 {	
 	Point src;

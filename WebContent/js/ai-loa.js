@@ -375,7 +375,7 @@ linesOfAction.prototype.onClickChecker = function (a , context)
 			else
 			{
 				console.log('not ur piece man');
-				alert('Not ur piece')
+				alert('Not your piece')
 			}
 		}
 		else

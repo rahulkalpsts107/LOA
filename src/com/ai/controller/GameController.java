@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -17,6 +16,13 @@ import com.ai.model.PlayerType;
 import com.ai.model.Point;
 import com.ai.servlet.BootServlet;
 
+/*Below class takes care of route of Web service requests and responsible to provide game board instances to frontend*/
+
+/**
+ * 
+ * @author rrk
+ * Restores game from session if present
+ */
 @Path("/game")
 public class GameController {
 
@@ -43,6 +49,7 @@ public class GameController {
 		System.out.println(ret);
 		return ret;
 	}
+	
 	/**
 	 * Successful move will return 0 and unsuccessful move will return 1
 	 * BLACKPLAYER = 0,
@@ -54,13 +61,11 @@ public class GameController {
 	//@Produces(MediaType.APPLICATION_XML)
 	public int makeMove( @Context HttpServletRequest req)
 	{
-		System.out.println("make move");
 		int player = Integer.parseInt(req.getParameter("player"));
 		int srcx= Integer.parseInt(req.getParameter("srcX"));
 		int srcy= Integer.parseInt(req.getParameter("srcY"));
 		int dstx= Integer.parseInt(req.getParameter("destX"));
 		int dsty= Integer.parseInt(req.getParameter("destY"));
-		System.out.println("make move from x "+ srcx + " y "+ srcy+ "to x "+dstx + " y "+dsty+ " pl: "+player);
 		int ret = 1;
 		HttpSession session= req.getSession(false);
 		if(session != null)
@@ -83,6 +88,12 @@ public class GameController {
 		return ret;
 	}
 	
+	/**
+	 * Api that handles legal moves action and returns a List of MoveParam points to frontend
+	 * @param req
+	 * @return
+	 */
+	
 	@GET
 	@Path("legalmoves")
 	@Produces(MediaType.APPLICATION_JSON )
@@ -92,7 +103,6 @@ public class GameController {
 		int x= Integer.parseInt(req.getParameter("xPos"));
 		int y= Integer.parseInt(req.getParameter("yPos"));
 		PointParam point = new PointParam(x,y);
-		System.out.println("legal moves x "+ x + " y "+ y+  " pl: "+player);
 		List<MoveParam> moves= new ArrayList<>();
 		HttpSession session= req.getSession(false);
 		if(session != null)
@@ -118,6 +128,11 @@ public class GameController {
 		return moves;
 	}
 	
+	/**
+	 * This is the call to request CPU to make the next move when human has finished making the move
+	 * @param req
+	 * @return
+	 */
 	@GET
 	@Path("cpumove")
 	@Produces(MediaType.APPLICATION_JSON )
@@ -140,13 +155,17 @@ public class GameController {
 		return ret;
 	}
 	
+	/**
+	 * Checks if human or cpu won the game.
+	 * @param req
+	 * @return
+	 */
 	@GET
 	@Path("whowon")
 	@Produces(MediaType.APPLICATION_JSON )
 	public int whoWon(@Context HttpServletRequest req){
 		HttpSession session= req.getSession(false);
 		int ret=2;
-		System.out.println("whowon ?");
 		if(session != null)
 		{
 			Integer Id = (Integer) req.getSession().getAttribute("gameId");
@@ -162,6 +181,12 @@ public class GameController {
 		return ret;
 	}
 	
+	/**
+	 * Deletes the game instance so a new game can be started
+	 * Deletes old game from session
+	 * @param req
+	 * @return
+	 */
 	@GET
 	@Path("deletegame")
 	@Produces(MediaType.APPLICATION_JSON )

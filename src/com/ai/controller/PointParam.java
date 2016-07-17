@@ -4,6 +4,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.ai.model.Point;
 
+/**
+ * Following class describes a point in the game board to the frontend
+ * @author rrk
+ *
+ */
 @XmlRootElement
 public class PointParam {
 	private int x;

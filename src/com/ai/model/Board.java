@@ -3,6 +3,12 @@ package com.ai.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Board class represents the state of the Lines of action board
+ * Its a 2D array of #Checker object
+ * @author rrk
+ *
+ */
 public class Board {
 	private Checker [][] board;
 	private PlayerType humanPlayer;
@@ -14,6 +20,7 @@ public class Board {
 	
 	private PlayerType nextPlayersTurn;
 	
+	/*Constructor*/
 	public Board(int boardSize)
 	{
 		this.boardSize = boardSize;
@@ -25,7 +32,7 @@ public class Board {
 		nextPlayersTurn = PlayerType.BLACK;
 	}
 
-	
+	/*Copy constructor*/
 	public Board(Board copyBoard)
 	{
 		boardSize = copyBoard.boardSize;
@@ -46,16 +53,19 @@ public class Board {
 		backup=null;
 	}
 	
+	/*returns the number of pieces remaining for a player*/
 	public int getCount(PlayerType playerType)
 	{
 		return checkersCount[playerType.ordinal()];
 	}
 	
+	/*returns the human player type*/
 	public PlayerType getHumanPlayer()
 	{
 		return humanPlayer;
 	}
 	
+	/*returns the cpu player type*/
 	public PlayerType getCPUPlayer()
 	{
 		return cpuPlayer;
@@ -72,6 +82,7 @@ public class Board {
 		}
 	}
 	
+	/*Initializes the board on game creation*/
 	private void initializePlayersOnBoard() //This function will initialize board based on human player selection
 	{
 		for(int i=0; i<=boardSize; i+=boardSize-1) //Always put human player front facing
@@ -111,6 +122,8 @@ public class Board {
 		initializePlayersOnBoard();
 	}
 	
+	/*Makes a move from one Point to another and modifying the board accordingly*/
+	/*Any enemy pieces will be captured*/
 	public boolean makeMove(Point sourcePoint, Point destPoint)
 	{
 		Checker sourceChecker = board[sourcePoint.getX()][sourcePoint.getY()];
@@ -184,6 +197,7 @@ public class Board {
 		}
 	}
 	
+	/*Checks any enemy checkers in the path*/
 	public boolean anyEnemyCheckers(Point start, Point end) {
         if (board[start.getX()][start.getY()].equals(board[end.getX()][end.getY()]))
             return false;
@@ -216,6 +230,7 @@ public class Board {
     }
 	
 	
+	/*Generated all legal moves from one point */
 	public List<Point> generateAllPossibleMoves(Point sourcePoint)
 	{
 		Checker sourceChecker = board[sourcePoint.getX()][sourcePoint.getY()];
@@ -295,6 +310,7 @@ public class Board {
 		return moves;
 	}
 	
+	/* get all counts of pieces on row*/
 	public int getPossibleMovesCountOnRow(Point start)
 	{
 		int count = 0;
@@ -307,6 +323,7 @@ public class Board {
         return count;
 	}
 	
+	/* get all counts of pieces on column*/
 	public int getPossibleMovesCountOnColumn(Point start)
 	{
 		int count = 0;
@@ -415,7 +432,6 @@ public class Board {
 	public String toString() {
 		return dumpCurrentBoard();
 	}
-
 	
 	public String toJsonString(){
 		StringBuilder builder = new StringBuilder();
@@ -451,6 +467,8 @@ public class Board {
 		System.out.println(b.dumpCurrentBoard());
 		List<Point> p = b.generateAllPossibleMoves(new Point(2,4));
 		System.out.println(p);
+		Board b1 = new Board(b);
+		System.out.println(b1.dumpCurrentBoard());
 		return ;
 //		b.makeMove(new Point(0,0), new Point(2,5));//Invlaid move EMTPY
 //		b.makeMove(new Point(6,0), new Point(2,5));//Invlaid move Not ur move

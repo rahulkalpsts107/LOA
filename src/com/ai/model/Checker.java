@@ -2,6 +2,12 @@ package com.ai.model;
 
 import com.ai.config.Constants;
 
+/**
+ *Checker class represents a checker on Board
+ * It tracks the position on the board and to which player it belongs 
+ * @author rrk
+ *
+ */
 public class Checker 
 {
 	public PlayerType playerType;

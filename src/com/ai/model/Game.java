@@ -12,6 +12,7 @@ public class Game
 	private Board board;
 	private static int totalDepth =Constants.MAX_DEPTH_HARD;
 	
+	/*Game constructor*/
 	public Game(int size, int diff)
 	{
 		if(diff == 0)
@@ -24,6 +25,7 @@ public class Game
 		master = new Master(totalDepth,size);
 	}
 	
+	/*API that starts the AI*/
 	public boolean cpuPlay()
 	{
 		boolean ret = false;
@@ -42,6 +44,7 @@ public class Game
 		return board.getCurrentTurn();
 	}
 	
+	/*API to make a move on board*/
 	public boolean makeMove(Point src, Point dest)
 	{
 		boolean ret= false;
@@ -85,6 +88,7 @@ public class Game
 		return board.toJsonString();
 	}
 	
+	/*Returns 1 if CPU won or 0 if human won and 2 if draw*/
 	public int whoWon()
 	{
 		int ret = 2; //2 means no one won
@@ -103,7 +107,7 @@ public class Game
 			if(isHumanGame)
 			{
 				ret = 0;
-				System.out.println("HUman won shame");
+				System.out.println("HUman won !");
 			}
 			else if(isCPUGame)
 			{

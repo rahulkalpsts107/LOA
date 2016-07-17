@@ -2,6 +2,11 @@ package com.ai.controller;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Following class describes a move to frontend
+ * @author rrk
+ *
+ */
 @XmlRootElement
 public class MoveParam {
 
